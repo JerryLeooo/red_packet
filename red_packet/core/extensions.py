@@ -5,6 +5,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_caching import Cache
+from fakeredis import FakeStrictRedis
+from werkzeug.local import LocalProxy
+from os import environ
+from redis import StrictRedis
+
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -37,3 +42,16 @@ def load_user_from_request(request):
 
     # finally, return None if both methods did not login the user
     return None
+
+def get_redis():
+
+    from flask import current_app as app
+
+    if app.testing:
+        return FakeStrictRedis()
+    else:
+        return StrictRedis(
+            host=environ.get("REDIS_PORT_6379_TCP_ADDR", 'localhost'),
+            port=environ.get("REDIS_PORT_6379_TCP_PORT", 6379))
+
+redis_store = LocalProxy(get_redis)

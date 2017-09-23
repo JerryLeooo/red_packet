@@ -40,7 +40,7 @@ def configure_errorhandlers(app):
 
     @app.errorhandler(ApiError)
     def api_error_handler(error):
-        response = jsonify(error.to_dict())
+        response = jsonify(error.as_dict())
         response.status_code = error.status_code
         return response
 

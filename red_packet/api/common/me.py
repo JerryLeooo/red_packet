@@ -7,12 +7,13 @@ from red_packet.models.user import User
 
 class MeCreditsAPI(Resource):
 
-    # method_decorators = [login_required]
+    method_decorators = [login_required]
 
     def get(self):
         return {
             'code': 0,
-            'credits': current_user.get_credits()
+            'user_id': current_user.id,
+            'credits': current_user.get_own_credits()
         }
 
 class MeShareListAPI(Resource):
@@ -22,5 +23,6 @@ class MeShareListAPI(Resource):
     def get(self):
         return {
             'code': 0,
-            'shares': current_user.get_shares()
+            'user_id': current_user.id,
+            'shares': current_user.get_own_shares()
         }

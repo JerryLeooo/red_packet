@@ -7,6 +7,8 @@ class ApiError(Exception):
 
     share_get_forbidden = (1001, "Share get foribidden", 403)
     not_found           = (1002, "Not Found", 404)
+    red_packet_not_found = (1003, "Red packet not found", 404)
+    red_packet_run_out = (1004, "Red packet run out", 404)
 
     def __init__(self, error_msg, extra_msg=None):
         Exception.__init__(self)

@@ -9,3 +9,7 @@ def test_packet(packet_creator, red_packet):
 
 def test_get_by_token(red_packet):
     assert RedPacket.get_by_token(red_packet.token) == red_packet
+
+def test_create_packet(packet_creator):
+    amount = 10
+    RedPacket.create(amount=amount, count=7, creator_id=packet_creator.id)
