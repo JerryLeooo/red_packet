@@ -1,16 +1,22 @@
 # -*- coding: utf-8 -*-
 
+from flask_login import UserMixin
 from red_packet.core.database import db, CRUDMixin, SurrogatePK
+from sqlalchemy import text
 
-
-class User(db.Model, CRUDMixin, SurrogatePK):
+class User(db.Model, CRUDMixin, SurrogatePK, UserMixin):
 
     __tablename__ = 'user'
 
     username = db.Column(db.Text, nullable=False)
+    api_key = db.Column(db.Text)
 
     def get_own_credits(self):
-        pass
+        sql = text("select sum(amount) "
+                   "from share "
+                   "where owner_id=%s" % self.id)
+        result = db.engine.execute(sql)
+        return result.fetchone()[0]
 
     # 暂未考虑分页
     def get_own_shares(self):

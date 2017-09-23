@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from red_packet.core.database import db, CRUDMixin, SurrogatePK, DateMixin
 
 class Share(db.Model, CRUDMixin, SurrogatePK, DateMixin):
@@ -9,6 +10,14 @@ class Share(db.Model, CRUDMixin, SurrogatePK, DateMixin):
     amount = db.Column(db.Integer)
     red_packet_token = db.Column(db.String(8))
     owner_id = db.Column(db.Integer)
+
+    @classmethod
+    def get_by_token_and_owner(cls, token, owner_id):
+        try:
+            return cls.query.filter_by(red_packet_token=token,
+                                       owner_id=owner_id).one()
+        except NoResultFound:
+            return None
 
     def as_dict(self):
         return {

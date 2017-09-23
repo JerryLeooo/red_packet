@@ -27,7 +27,7 @@ class DefaultConfig(object):
             os.getenv('POSTGRESQL_PASSWORD', '1iuyang'),
             os.getenv('POSTGRESQL_PORT_5432_TCP_ADDR', 'localhost'),
             os.getenv('POSTGRESQL_PORT_5432_TCP_PORT', '5432'),
-            os.getenv('POSTGRESQL_INSTANCE_NAME', 'postgres'))
+            os.getenv('POSTGRESQL_INSTANCE_NAME', 'red_packet'))
 
     SQLALCHEMY_ECHO = False
 
