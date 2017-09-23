@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import random
+
 def gen_token(_id):
 
     alphabet  = '023456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ'
@@ -15,4 +17,17 @@ def gen_token(_id):
         c += 1
 
     token = "".join(r)
-    return "%08s" % token
+    return token.zfill(8)
+
+def gen_sequence_key(token):
+    return 'share_seq:v1:%s' % token
+
+def gen_share_sequence(token, amount, count):
+    from red_packet.core.extensions import redis_store
+
+    key = gen_sequence_key(token) 
+
+    while count > 0:
+        cur = random.randint(1, amount - 1 * (count - 1))
+        redis_store.rpush(key, cur)
+        amount, count = amount - cur, count - 1

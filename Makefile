@@ -49,3 +49,6 @@ install:dependencies
 
 routes:
 	python manage.py list_routes
+
+doc:
+	bootprint openapi docs/swagger.yaml docs

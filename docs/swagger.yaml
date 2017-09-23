@@ -1,0 +1,173 @@
+swagger: '2.0'
+info:
+  description: This is a simple red packet API
+  version: 1.0.0
+  title: Red Packet API
+  termsOfService: ''
+  contact:
+    email: whilgeek@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'r.instask.me:8888'
+basePath: /api/v1
+tags:
+  - name: Red Packet
+    description: Red packet Information
+  - name: User
+    description: Information of user
+schemes:
+  - http
+paths:
+  /red_packet:
+    post:
+      tags:
+        - Red Packet
+      summary: Create a new red packet
+      description: Create a new red packet
+      operationId: createRedPacket
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: The total amount and count of the red packet
+          required: true
+          schema:
+            $ref: '#/definitions/NewRedPacket'
+      responses:
+        '201':
+          description: Red packet created successfully
+          schema:
+            $ref: '#/definitions/RedPacket'
+        '400':
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/ApiResponse'
+      security:
+        - api_key: []
+  '/red_packet/{token}':
+    post:
+      tags:
+        - Red Packet
+      summary: Get a share from the packet by token
+      description: Get a share from packet by token
+      produces:
+        - application/json
+      parameters:
+        - name: token
+          in: path
+          description: The token of the red packet
+          required: true
+          type: string
+      responses:
+        '200':
+          description: The red packet has been found
+          schema:
+            $ref: '#/definitions/Share'
+        '403':
+          description: Current user can not get the share
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '404':
+          description: Can not find the red packet
+          schema:
+            $ref: '#/definitions/ApiResponse'
+      security:
+        - api_key: []
+  /me/credits:
+    get:
+      tags:
+        - User
+      summary: Get the credits of current user
+      description: Get the credits of current user
+      operationId: getCreditsByAuth
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: number
+            format: integer
+      security:
+        - api_key: []
+  /me/shares_got:
+    get:
+      tags:
+        - User
+      summary: Get shares that current user got
+      description: Get shares that current user got
+      operationId: getPetById
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Share'
+      security:
+        - api_key: []
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Authorization
+    in: header
+definitions:
+  RedPacket:
+    type: object
+    properties:
+      token:
+        type: string
+      amount:
+        type: number
+        format: integer
+      count:
+        type: number
+        format: integer
+      creator:
+        $ref: '#/definitions/User'
+  NewRedPacket:
+    type: object
+    properties:
+      amount:
+        type: number
+        format: integer
+      count:
+        type: number
+        format: integer
+  Share:
+    type: object
+    properties:
+      id:
+        type: number
+        format: integer
+      red_packet_token:
+        type: string
+      amount:
+        type: number
+        format: integer
+      owner:
+        $ref: '#/definitions/User'
+  User:
+    type: object
+    properties:
+      id:
+        type: number
+        format: integer
+      username:
+        type: string
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
