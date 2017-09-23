@@ -6,6 +6,7 @@ from flask import request
 class ApiError(Exception):
 
     share_get_forbidden = (1001, "Share get foribidden", 403)
+    not_found           = (1002, "Not Found", 404)
 
     def __init__(self, error_msg, extra_msg=None):
         Exception.__init__(self)
@@ -17,7 +18,7 @@ class ApiError(Exception):
             'code': error_code,
         }
 
-    def to_dict(self):
+    def as_dict(self):
         rv = dict(self.data or ())
         rv['message'] = self.message
         return rv

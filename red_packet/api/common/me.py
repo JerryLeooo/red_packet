@@ -2,10 +2,12 @@
 
 from flask_restful import Resource
 from flask_login import current_user, login_required
+from red_packet.models.user import User
+
 
 class MeCreditsAPI(Resource):
 
-    method_decorators = [login_required]
+    # method_decorators = [login_required]
 
     def get(self):
         return {

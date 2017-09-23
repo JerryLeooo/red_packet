@@ -20,3 +20,10 @@ class NewRedPacketAPI(Resource):
             creator_id=current_user.id
         )
         return red_packet.as_dict()
+
+# 调试用
+class AllRedPacketsAPI(Resource):
+
+    def get(self):
+        red_packets = RedPacket.query.all()
+        return [p.as_dict() for p in red_packets]

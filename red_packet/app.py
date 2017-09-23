@@ -37,6 +37,7 @@ def configure_extensions(app):
     cache.init_app(app)
 
 def configure_errorhandlers(app):
+
     @app.errorhandler(ApiError)
     def api_error_handler(error):
         response = jsonify(error.to_dict())
