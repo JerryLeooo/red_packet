@@ -3,7 +3,7 @@
 import os
 from flask import Flask, g, jsonify
 from red_packet.core.extensions import (db, migrate, login_manager,
-                                        cache)
+                                        cache, make_celery)
 from red_packet.api import v1
 from red_packet.core.errors import ApiError
 
@@ -17,6 +17,7 @@ def create_app(Mode='Development'):
     configure_blueprints(app)
     configure_extensions(app)
     configure_errorhandlers(app)
+    celery = make_celery(app)
 
     return app
 

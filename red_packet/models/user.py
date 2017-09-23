@@ -10,13 +10,14 @@ class User(db.Model, CRUDMixin, SurrogatePK, UserMixin):
 
     username = db.Column(db.Text, nullable=False)
     api_key = db.Column(db.Text)
+    returned_credits = db.Column(db.Integer, default=0)
 
     def get_own_credits(self):
         sql = text("select sum(amount) "
                    "from share "
                    "where owner_id=%s" % self.id)
         result = db.engine.execute(sql)
-        return result.fetchone()[0]
+        return int(result.fetchone()[0]) + self.returned_credits
 
     # 暂未考虑分页
     def get_own_shares(self):
