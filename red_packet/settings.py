@@ -40,6 +40,9 @@ class DefaultConfig(object):
             os.getenv("REDIS_PORT_6379_TCP_ADDR", 'localhost'),
             os.getenv("REDIS_PORT_6379_TCP_PORT", 6379))
 
+    CELERY_RESULT_BACKEND = REDIS_URL
+    CELERY_BROKER_URL = REDIS_URL
+
     SQLALCHEMY_ECHO = False
 
     SERVER_NAME = os.getenv('RED_PACKET_SERVER') or 'r.instask.me:8888'

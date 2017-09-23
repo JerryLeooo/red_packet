@@ -7,6 +7,7 @@ from red_packet.core.helpers import (gen_token,
 from red_packet.core.extensions import redis_store
 from red_packet.core.errors import ApiError
 
+
 class RedPacket(db.Model, CRUDMixin, DateMixin, SurrogatePK):
 
     __tablename__ = 'red_packet'
@@ -18,10 +19,13 @@ class RedPacket(db.Model, CRUDMixin, DateMixin, SurrogatePK):
 
     @classmethod
     def create(cls, **kwargs):
+        from red_packet.core.worker import return_shares
         instance = cls(**kwargs)
         instance = instance.save()
         instance.token = gen_token(instance.id)
         gen_share_sequence(instance.token, instance.amount, instance.count)
+        return_shares.apply_async((instance.token, ),
+                                  countdown=24)
         return instance.save()
 
     @classmethod

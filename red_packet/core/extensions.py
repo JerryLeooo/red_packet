@@ -9,6 +9,8 @@ from fakeredis import FakeStrictRedis
 from werkzeug.local import LocalProxy
 from os import environ
 from redis import StrictRedis
+from werkzeug.utils import import_string
+from celery import Celery
 
 
 db = SQLAlchemy()
@@ -55,3 +57,15 @@ def get_redis():
             port=environ.get("REDIS_PORT_6379_TCP_PORT", 6379))
 
 redis_store = LocalProxy(get_redis)
+
+def make_celery(app):
+    celery = Celery(app.import_name, broker=app.config['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+    class ContextTask(TaskBase):
+        abstract = True
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+    celery.Task = ContextTask
+    return celery
