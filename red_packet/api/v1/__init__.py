@@ -11,7 +11,7 @@ RESOURCE_URLS = [
     ('/red_packet', NewRedPacketAPI, 'red_packet.create'),
     ('/red_packet/<token>', NewShareAPI, 'share.get'),
     ('/me/credits', MeCreditsAPI, 'me.credits'),
-    ('/me/shares_got', MeShareListAPI, 'me.shares'),
+    ('/me/shares_got', MeShareListAPI, 'me.shares_got'),
     ('/red_packets', AllRedPacketsAPI, 'red_packets.list')
 ]
 

@@ -27,17 +27,24 @@ def db(app):
 
 @pytest.fixture
 def packet_creator(app, db):
-    creator = User.create(username='test_packet_creator')
+    creator = User.create(username='test_packet_creator',
+                          api_key='test_packet_creator_apikey')
     return creator
 
 @pytest.fixture
 def share_getter(app, db):
-    getter = User.create(username='test_share_getter')
+    getter = User.create(username='test_share_getter',
+                         api_key='share_getter_apikey')
     return getter
 
 @pytest.fixture
 def red_packet(app, db, packet_creator):
     packet = RedPacket.create(amount=10000, count=10, creator_id=packet_creator.id)
+    return packet
+
+@pytest.fixture
+def red_packet_2(app, db, packet_creator):
+    packet = RedPacket.create(amount=10000, count=2, creator_id=packet_creator.id)
     return packet
 
 @pytest.fixture
