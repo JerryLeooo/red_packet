@@ -9,7 +9,7 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-host: 'r.instask.me:8888'
+host: 'red.instask.me'
 basePath: /api/v1
 tags:
   - name: Red Packet
@@ -17,7 +17,7 @@ tags:
   - name: User
     description: Information of user
 schemes:
-  - http
+  - https
 paths:
   /red_packet:
     post:
