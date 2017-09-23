@@ -2,7 +2,7 @@
 
 from flask_restful import Resource, reqparse
 from flask_login import current_user, login_required
-from red_packet.models.red_packet import RedPacket
+from red_packet.models.packet import RedPacket
 from red_packet.core.errors import ApiError
 
 parser = reqparse.RequestParser()

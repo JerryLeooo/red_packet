@@ -2,6 +2,7 @@
 
 from red_packet.core.database import db, CRUDMixin, SurrogatePK
 
+
 class User(db.Model, CRUDMixin, SurrogatePK):
 
     __tablename__ = 'user'

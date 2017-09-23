@@ -5,29 +5,7 @@ from flask import request
 
 class ApiError(Exception):
 
-    user_not_found             = (1001, "User not found.", 404)
-    bad_parameter              = (1002, "Bad parameters.", 400)
-    not_login                  = (1003, "Not login.", 401)
-
-    answer_not_viewable        = (1004, "You can not view this answer.", 403)
-
-    order_created_failed       = (1005, "Order created failed.", 500)
-    order_not_found            = (1006, "Order not found.", 404)
-
-    question_not_found         = (1007, "Question not found.", 404)
-    question_not_viewable      = (1008, "You can not view this question.", 403)
-    question_created_failed    = (1009, "Question created failed.", 500)
-
-    settings_created_failed    = (1010, "Settings created or updated failed.", 500)
-    not_supported_login_method = (1011, "Not supported login method.", 400)
-    duplicated_order           = (1012, "Order has been success", 400)
-    already_listener           = (1013, "Already listener", 400)
-
-    not_your_question          = (1014, "Not your question", 403)
-    unknown_error              = (1015, "Unknown error", 500)
-    verify_failed              = (1016, "Verify failed", 400)
-    credit_not_enough          = (1017, "Credit not enough", 403)
-    iap_failed                 = (1018, "IAP failed", 500)
+    share_get_forbidden = (1001, "Share get foribidden", 403)
 
     def __init__(self, error_msg, extra_msg=None):
         Exception.__init__(self)

@@ -2,11 +2,11 @@
 
 from flask_login import current_user, login_required
 from flask_restful import Resource, reqparse
-from red_packet.models.red_packet import RedPacket
+from red_packet.models.packet import RedPacket
 
 parser = reqparse.RequestParser()
 parser.add_argument('total_amount', required=True)
-parser.add_argurment('count', required=True)
+parser.add_argument('count', required=True)
 
 class NewRedPacketAPI(Resource):
 

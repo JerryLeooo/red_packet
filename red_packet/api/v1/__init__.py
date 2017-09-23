@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint
-from flask.ext import restful
+import flask_restful as restful
 
-from red_packet.api.common.red_packet import NewRedPacketAPI
+from red_packet.api.common.packet import NewRedPacketAPI
 from red_packet.api.common.share import NewShareAPI
 from red_packet.api.common.me import MeCreditsAPI, MeShareListAPI
 

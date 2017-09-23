@@ -23,3 +23,14 @@ class RedPacket(db.Model, CRUDMixin, DateMixin, SurrogatePK):
             token = gen_token(self.id)
             self.update(token=token)
             return token
+
+    def as_dict(self):
+        return {
+            'token': self.token,
+            'amount': self.amount,
+            'count': self.count,
+            'creator_id': self.creator_id
+        }
+
+    def next_share(self):
+        return 0, 0

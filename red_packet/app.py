@@ -2,7 +2,6 @@
 
 import os
 from flask import Flask, g, jsonify
-from flask_login import current_user
 from red_packet.core.extensions import (db, migrate, login_manager,
                                         cache)
 from red_packet.api import v1
@@ -11,7 +10,7 @@ from red_packet.core.errors import ApiError
 
 def create_app(Mode='Development'):
     app = Flask('red_packet')
-    if os.getenv('red_packet_PRODUCTION'):
+    if os.getenv('RED_PACKET_PRODUCTION'):
         Mode = 'Production'
     app.config.from_object('red_packet.settings.%sConfig' % Mode)
 
@@ -22,12 +21,6 @@ def create_app(Mode='Development'):
     return app
 
 def configure_after_request(app):
-    def get_current_user(response):
-        if current_user.is_authenticated:
-            g.user = current_user.as_dict()
-        else:
-            g.user = {}
-        return response
     def rollback(response):
         db.session.rollback()
 
