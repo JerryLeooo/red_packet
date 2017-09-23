@@ -28,6 +28,10 @@ def gen_share_sequence(token, amount, count):
     key = gen_sequence_key(token) 
 
     while count > 0:
+        if count == 1:
+            redis_store.rpush(key, amount)
+            return
+
         cur = random.randint(1, amount - 1 * (count - 1))
         redis_store.rpush(key, cur)
         amount, count = amount - cur, count - 1
