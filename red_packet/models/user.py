@@ -9,7 +9,7 @@ class User(db.Model, CRUDMixin, SurrogatePK, UserMixin):
     __tablename__ = 'user'
 
     username = db.Column(db.Text, nullable=False)
-    api_key = db.Column(db.Text)
+    api_key = db.Column(db.Text, index=True)
     returned_credits = db.Column(db.Integer, default=0)
 
     def get_own_credits(self):
