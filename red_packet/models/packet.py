@@ -12,10 +12,10 @@ class RedPacket(db.Model, CRUDMixin, DateMixin, SurrogatePK):
 
     __tablename__ = 'red_packet'
 
-    token = db.Column(db.String(8))
+    token = db.Column(db.String(8), index=True)
     amount = db.Column(db.Integer, nullable=False)
     count = db.Column(db.Integer, nullable=False)
-    creator_id = db.Column(db.Integer, nullable=False)
+    creator_id = db.Column(db.Integer, nullable=False, index=True)
 
     @classmethod
     def create(cls, **kwargs):
@@ -25,7 +25,7 @@ class RedPacket(db.Model, CRUDMixin, DateMixin, SurrogatePK):
         instance.token = gen_token(instance.id)
         gen_share_sequence(instance.token, instance.amount, instance.count)
         return_shares.apply_async((instance.token, ),
-                                  countdown=24)
+                                  countdown=24 * 60 * 60)
         return instance.save()
 
     @classmethod

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import os
 import base64
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -52,9 +53,8 @@ def get_redis():
     if app.testing:
         return FakeStrictRedis()
     else:
-        return StrictRedis(
-            host=environ.get("REDIS_PORT_6379_TCP_ADDR", 'localhost'),
-            port=environ.get("REDIS_PORT_6379_TCP_PORT", 6379))
+        redis_url = os.getenv("REDIS_URL", None) or 'redis://localhost:6379'
+        return StrictRedis.from_url(redis_url)
 
 redis_store = LocalProxy(get_redis)
 

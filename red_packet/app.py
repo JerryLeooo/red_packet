@@ -17,7 +17,6 @@ def create_app(Mode='Development'):
     configure_blueprints(app)
     configure_extensions(app)
     configure_errorhandlers(app)
-    celery = make_celery(app)
 
     return app
 
