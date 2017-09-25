@@ -2,7 +2,7 @@
 
 def test_get_shares(red_packet, share_getter):
     share = red_packet.get_next_share(share_getter)
-    assert share.as_dict() in share_getter.get_own_shares()
+    assert share.as_dict() in [s.as_dict() for s in share_getter.get_own_shares()]
 
 def test_own_credits(share_getter, red_packet):
     share = red_packet.get_next_share(share_getter)

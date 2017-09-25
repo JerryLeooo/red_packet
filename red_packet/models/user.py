@@ -25,4 +25,4 @@ class User(db.Model, CRUDMixin, SurrogatePK, UserMixin):
         from red_packet.models.share import Share
 
         shares = Share.query.filter_by(owner_id=self.id).all()
-        return [share.as_dict() for share in shares]
+        return shares

@@ -14,7 +14,7 @@ class Share(db.Model, CRUDMixin, SurrogatePK, DateMixin):
 
     amount = db.Column(db.Integer)
     red_packet_token = db.Column(db.String(8))
-    owner_id = db.Column(db.Integer)
+    owner_id = db.Column(db.Integer, index=True)
 
     @classmethod
     def get_by_token_and_owner(cls, token, owner_id):
