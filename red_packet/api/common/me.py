@@ -24,5 +24,5 @@ class MeShareListAPI(Resource):
         return {
             'code': 0,
             'user_id': current_user.id,
-            'shares': current_user.get_own_shares()
+            'shares': [share.as_dict() for share in current_user.get_own_shares()]
         }
