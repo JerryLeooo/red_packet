@@ -3,10 +3,12 @@ A simple red packet API
 
 ## make command
 
-- `make doc`          # generate docs
-- `make test`         # apitest and unittest
-- `make routes`       # display all routes
-- `make run`          # starting server
+- `make doc`          generate docs
+- `make test`         apitest and unittest
+- `make routes`       display all routes
+- `make run`          starting server
+
+## Others
 
 - Trying at https://red.instask.me
 
