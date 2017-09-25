@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-import base64
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_caching import Cache
 from fakeredis import FakeStrictRedis
 from werkzeug.local import LocalProxy
-from os import environ
 from redis import StrictRedis
-from werkzeug.utils import import_string
 from celery import Celery
 
 
@@ -35,10 +32,6 @@ def load_user_from_request(request):
     api_key = request.headers.get('Authorization')
     if api_key:
         api_key = api_key.replace('Basic ', '', 1)
-        try:
-            api_key = base64.b64decode(api_key)
-        except TypeError:
-            pass
         user = User.query.filter_by(api_key=api_key).first()
         if user:
             return user
