@@ -1,4 +1,4 @@
-# red_packet
+# red-packet
 A simple red packet API
 
 ## make command
